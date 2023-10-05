@@ -12,17 +12,15 @@ func main() {
 	fmt.Scanln(&answer)
 
 	if answer == "y" {
-		cards = newDeck()
-		cards.saveToFile("my_cards")
+		cards = createAndSaveNewDeck()
 	} else if answer == "n" {
-		var filename string
-		fmt.Println("Introduce the deck file path?")
-		fmt.Scanln(&filename)
-		cards = newDeckFromFile(filename)
+		cards = createDeckFromFile()
 	} else {
 		fmt.Println("Not valid answer")
 		os.Exit(1)
 	}
+
+	cards.shuffle()
 
 	hand, remainingDeck := deal(cards, 5)
 
@@ -32,6 +30,15 @@ func main() {
 	remainingDeck.print()
 }
 
-func newCard() string {
-	return "Five of Diamonds"
+func createAndSaveNewDeck() deck {
+	cards := newDeck()
+	cards.saveToFile("my_cards")
+	return cards
+}
+
+func createDeckFromFile() deck {
+	var filename string
+	fmt.Println("Introduce the deck file path?")
+	fmt.Scanln(&filename)
+	return newDeckFromFile(filename)
 }
