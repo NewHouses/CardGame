@@ -12,10 +12,6 @@ func main() {
 	hand.print()
 	fmt.Println("\n\nRemaining deck")
 	remainingDeck.print()
-
-	hand.toString()
-	fmt.Println(hand.toString())
-
 }
 
 func newCard() string {
