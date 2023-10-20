@@ -16,7 +16,7 @@ func main() {
 	} else if answer == "gal" {
 		chatBot = galicianBot{}
 	} else {
-		fmt.Println("Answer " + answer + " is not valid")
+		fmt.Println("Answer " + answer + " is not valid / Resposta " + answer + " non válida")
 		os.Exit(1)
 	}
 
@@ -27,8 +27,7 @@ func main() {
 	} else if answer == "n" {
 		cards = createDeckFromFile()
 	} else {
-		fmt.Println("Answer " + answer + " is not valid")
-		os.Exit(1)
+		chatBot.notValidAnswer(answer)
 	}
 
 	cards.shuffle()
