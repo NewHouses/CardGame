@@ -8,15 +8,26 @@ import (
 func main() {
 	var answer string
 	var cards deck
-	fmt.Println("Do you want to create a new Deck? (y/n)")
+	var chatBot bot
+	fmt.Println("English/Galego? (en/gal)")
 	fmt.Scanln(&answer)
+	if answer == "en" {
+		chatBot = englishBot{}
+	} else if answer == "gal" {
+		chatBot = galicianBot{}
+	} else {
+		fmt.Println("Answer " + answer + " is not valid")
+		os.Exit(1)
+	}
+
+	chatBot.askCreateDeck(&answer)
 
 	if answer == "y" {
 		cards = createAndSaveNewDeck()
 	} else if answer == "n" {
 		cards = createDeckFromFile()
 	} else {
-		fmt.Println("Not valid answer")
+		fmt.Println("Answer " + answer + " is not valid")
 		os.Exit(1)
 	}
 
