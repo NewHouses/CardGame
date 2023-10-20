@@ -6,8 +6,9 @@ import (
 )
 
 type bot interface {
-	askCreateDeck(pointerAnswer *string)
+	askCreateNewDeck() bool
 	notValidAnswer(answer string)
+	askFilePath() string
 	showDecks(hand deck, remainingDeck deck)
 }
 
@@ -28,14 +29,31 @@ func botFactory() bot {
 
 type englishBot struct{}
 
-func (englishBot) askCreateDeck(pointerAnswer *string) {
+func (eb englishBot) askCreateNewDeck() bool {
+	var answer string
 	fmt.Println("Do you want to create a new Deck? (y/n)")
-	fmt.Scanln(&*pointerAnswer)
+	fmt.Scanln(&answer)
+
+	if answer != "y" && answer != "n" {
+		eb.notValidAnswer(answer)
+	} else if answer == "n" {
+		return false
+	}
+
+	return true
 }
 
 func (englishBot) notValidAnswer(answer string) {
 	fmt.Println("Answer " + answer + " is not valid")
 	os.Exit(1)
+}
+
+func (englishBot) askFilePath() string {
+	var filename string
+	fmt.Println("Introduce the deck file path")
+	fmt.Scanln(&filename)
+
+	return filename
 }
 
 func (englishBot) showDecks(hand deck, remainingDeck deck) {
@@ -47,14 +65,31 @@ func (englishBot) showDecks(hand deck, remainingDeck deck) {
 
 type galicianBot struct{}
 
-func (galicianBot) askCreateDeck(pointerAnswer *string) {
-	fmt.Println("Queres crear unha nova baralla? (y/n)")
-	fmt.Scanln(&*pointerAnswer)
+func (gb galicianBot) askCreateNewDeck() bool {
+	var answer string
+	fmt.Println("Queres crear unha nova baralla? (s/n)")
+	fmt.Scanln(&answer)
+
+	if answer != "s" && answer != "n" {
+		gb.notValidAnswer(answer)
+	} else if answer == "n" {
+		return false
+	}
+
+	return true
 }
 
 func (galicianBot) notValidAnswer(answer string) {
 	fmt.Println("Resposta " + answer + " non válida")
 	os.Exit(1)
+}
+
+func (galicianBot) askFilePath() string {
+	var filename string
+	fmt.Println("Introduce a ruta do arquivo da baralla")
+	fmt.Scanln(&filename)
+
+	return filename
 }
 
 func (galicianBot) showDecks(hand deck, remainingDeck deck) {

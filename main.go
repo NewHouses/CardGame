@@ -1,23 +1,14 @@
 package main
 
-import (
-	"fmt"
-)
-
 func main() {
-	var answer string
 	var cards deck
 
 	chatBot := botFactory()
 
-	chatBot.askCreateDeck(&answer)
-
-	if answer == "y" {
+	if chatBot.askCreateNewDeck() {
 		cards = createAndSaveNewDeck()
-	} else if answer == "n" {
-		cards = createDeckFromFile()
 	} else {
-		chatBot.notValidAnswer(answer)
+		cards = createDeckFromFile(chatBot)
 	}
 
 	cards.shuffle()
@@ -33,9 +24,7 @@ func createAndSaveNewDeck() deck {
 	return cards
 }
 
-func createDeckFromFile() deck {
-	var filename string
-	fmt.Println("Introduce the deck file path?")
-	fmt.Scanln(&filename)
-	return newDeckFromFile(filename)
+func createDeckFromFile(chatBot bot) deck {
+	filepath := chatBot.askFilePath()
+	return newDeckFromFile(filepath)
 }
