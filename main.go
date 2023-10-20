@@ -2,23 +2,13 @@ package main
 
 import (
 	"fmt"
-	"os"
 )
 
 func main() {
 	var answer string
 	var cards deck
-	var chatBot bot
-	fmt.Println("English/Galego? (en/gal)")
-	fmt.Scanln(&answer)
-	if answer == "en" {
-		chatBot = englishBot{}
-	} else if answer == "gal" {
-		chatBot = galicianBot{}
-	} else {
-		fmt.Println("Answer " + answer + " is not valid / Resposta " + answer + " non válida")
-		os.Exit(1)
-	}
+
+	chatBot := botFactory()
 
 	chatBot.askCreateDeck(&answer)
 

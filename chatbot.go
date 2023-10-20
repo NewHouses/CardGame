@@ -11,6 +11,21 @@ type bot interface {
 	showDecks(hand deck, remainingDeck deck)
 }
 
+func botFactory() bot {
+	var answer string
+	fmt.Println("English/Galego? (en/gal)")
+	fmt.Scanln(&answer)
+
+	if answer != "en" && answer != "gal" {
+		fmt.Println("Answer " + answer + " is not valid / Resposta " + answer + " non válida")
+		os.Exit(1)
+	} else if answer == "gal" {
+		return galicianBot{}
+	}
+
+	return englishBot{}
+}
+
 type englishBot struct{}
 
 func (englishBot) askCreateDeck(pointerAnswer *string) {
