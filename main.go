@@ -35,10 +35,7 @@ func main() {
 
 	hand, remainingDeck := deal(cards, 5)
 
-	fmt.Println("My hand")
-	hand.print()
-	fmt.Println("\n\nRemaining deck")
-	remainingDeck.print()
+	chatBot.showDecks(hand, remainingDeck)
 }
 
 func createAndSaveNewDeck() deck {
